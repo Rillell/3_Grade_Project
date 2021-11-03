@@ -1,0 +1,26 @@
+package homework3;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+public class NationPartition {
+
+	public static void main(String[] args) {
+		Stream<Nation> sn = Nation.nations.stream().limit(4);
+		Map<Boolean, List<Nation>> m1 = sn.collect(Collectors.partitioningBy(p -> p.getType() == Nation.Type.LAND)); //type가 land와 그렇지 앟은것.
+		System.out.println(m1);
+		
+		sn = Nation.nations.stream().limit(4);
+		Map<Boolean, Long> m2 = sn.collect(Collectors.partitioningBy
+				(p -> p.getType() == Nation.Type.LAND, Collectors.counting())); //개수
+		System.out.println(m2);
+		
+		sn = Nation.nations.stream().limit(4);
+		Map<Boolean, String> m3 = sn.collect(Collectors.partitioningBy(p -> p.getType() == Nation.Type.LAND,
+									Collectors.mapping(Nation::getName, Collectors.joining("#"))));
+		System.out.println(m3);
+	}
+
+}
